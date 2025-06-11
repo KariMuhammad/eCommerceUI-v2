@@ -1,4 +1,4 @@
-import { BsStar } from "react-icons/bs";
+import { BsStarFill } from "react-icons/bs";
 
 type RateStarProps = {
   active: boolean;
@@ -7,7 +7,7 @@ type RateStarProps = {
 export default function RateStar({ active, ...restProps }: RateStarProps) {
   return (
     <div {...restProps}>
-      <BsStar
+      <BsStarFill
         className="w-full h-full"
         fill={active ? "orange" : "#ccc"}
         stroke="transparent"

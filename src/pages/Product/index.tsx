@@ -1,236 +1,288 @@
-import { useState } from "react";
-
 import { Breadcrump } from "@/components";
-import ProductDetails from "@/components/ProductDetails";
-import { Grid2Products, HorizontalProduct, Rates } from "@/components/shared";
-import { products } from "@/constants";
+import { GiFlamer, GiReturnArrow } from "react-icons/gi";
+import { Rates, VerticalProduct } from "@/components/shared";
+import { ProductDiscount } from "./ProductDiscount";
+import { BsEyeFill } from "react-icons/bs";
+import QuantityInput from "@/components/shared/QuantityInput";
+import Button from "@/components/shared/Button";
+import { MdLocalShipping, MdMail, MdPayment } from "react-icons/md";
+import { HiOutlineHeart } from "react-icons/hi";
+import { BiLayer, BiShareAlt, BiShield } from "react-icons/bi";
+import paymentMethods from "@/constants/payment-methods";
+import { ProductImage } from "./ProductImage";
+import Tabs from "@/components/shared/Tabs";
+import Box from "@/components/shared/Box";
+import trendingProducts from "@/constants/trending-products";
+import Carousel from "@/components/shared/Carousel";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 const Product = () => {
-  const [openReview, setOpenReview] = useState(false);
+  // const [openReview, setOpenReview] = useState(false);
 
   return (
     <>
-      <div className="pg-product">
-        <div className="breadcrump">
+      <div aria-label="pg-product">
+        <div aria-label="breadcrump" className="m-2">
           <Breadcrump
             links={[
               { link: "/", name: "Home" },
-              { link: "/products", name: "Products" },
+              { link: "/store", name: "Store" },
               { name: "Product", link: "/product", active: true },
             ]}
           />
         </div>
 
-        <div className="pg-content">
-          <div className="container-xxl">
-            <section className="product-details">
-              <ProductDetails />
-            </section>
-            <section className="product-description">
-              <h3 className="section-title">Description</h3>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Dolorum asperiores error cumque nihil perspiciatis a minus culpa
-                atque veritatis ducimus, cupiditate quo neque cum molestias
-                explicabo tempore minima fugiat praesentium. Repellendus
-                asperiores illum obcaecati doloribus earum ab eligendi
-                repudiandae soluta perspiciatis reiciendis ex necessitatibus
-                voluptatum quas, quae et qui nulla pariatur sunt nihil quibusdam
-                maiores iure! Voluptatibus quas dolore minima. Ad nulla tenetur,
-                saepe in est aliquid nemo esse quasi mollitia molestiae maxime
-                odio aperiam obcaecati deleniti commodi excepturi consequuntur
-                dolore natus cum! Dolorem rem porro ex vel numquam nemo.
-              </p>
-            </section>
+        <div className="pg-content flex flex-col md:flex-row gap-6 p-6">
+          <ProductImage />
 
-            <section
-              id="form-review"
-              className={`form-review ${openReview ? "show" : ""}`}
+          <div className="product-details basis-1/2">
+            <h3 className="text-3xl font-bold text-blue-600">
+              Blink Home Security Camera System
+            </h3>
+
+            <div className="flex items-baseline gap-2">
+              <div
+                aria-label="product-reviews"
+                className="my-3 flex flex-col sm:flex-row items-center sm:gap-2"
+              >
+                <Rates stars={5} rate={5} isFixed />
+                <span className="text-xs lg:text-lg text-gray-500">
+                  (1 reviews)
+                </span>
+              </div>
+
+              <div
+                aria-label="product-sold"
+                className="flex items-center gap-1"
+              >
+                <GiFlamer color="red" className="text-lg" />
+                <span className="text-sm sm:text-xl font-semibold">
+                  100 sold last 24 hours
+                </span>
+              </div>
+            </div>
+            {/* ./ Upper Data */}
+
+            <hr className="w-full h-0.5 bg-gray-200 my-9" />
+
+            <ProductDiscount />
+
+            <div
+              aria-label="product-views"
+              className="flex items-center gap-2 mt-4"
             >
-              <h3 className="">Write a review</h3>
-              {/*  */}
-              <div className="form-rate">
-                <h5>Rating</h5>
-                <Rates stars={5} rate={3} isFixed={true} />
+              <div className="bg-black p-1 rounded-full w-fit">
+                <BsEyeFill className="text-sm text-white" />
               </div>
-              {/*  */}
-              <div>
-                <h5>Review title</h5>
-                <input type="text" placeholder="Give your review title" />
-              </div>
-              {/*  */}
-              <div>
-                <h5>Review</h5>
-                <textarea
-                  name=""
-                  id=""
-                  cols={30}
-                  rows={10}
-                  placeholder="Write your review here"
-                ></textarea>
-              </div>
-              {/*  */}
-              <div>
-                <h5>Picture/Video (Optional)</h5>
-                <input type="file" />
-              </div>
-              {/*  */}
-              <div>
-                <h5>
-                  Name (Displayed Publicly like{" "}
-                  <span className="text-primary">John Doe</span> ) (Optional)
-                </h5>
-                <input type="text" placeholder="Enter your name (public)" />
-              </div>
-              {/*  */}
-              <div>
-                <h5>Email</h5>
-                <input type="email" placeholder="Enter your email" />
-              </div>
-              {/*  */}
-              <p>
-                How we use your data: We’ll only contact you about the review
-                you left, and only if necessary. By submitting your review, you
-                agree to Judge.me’s <span>terms</span>, <span>privacy</span> and
-                <span> content</span> policies.
-              </p>
+              <span className="text-black font-semibold">
+                24 people are viewing this right now
+              </span>
+            </div>
 
-              <div className="buttons">
-                <button className="btn btn-primary text-white">Submit</button>
-                <button
-                  className="btn btn-outline btn-outline-primary"
-                  onClick={() => setOpenReview(false)}
+            {/* ./Views */}
+
+            <div className="flex flex-col items-start gap-4 mt-6">
+              <div className="w-full flex items-center">
+                <div className="basis-1/4">
+                  <QuantityInput />
+                </div>
+
+                <div className="basis-3/4 bg-gradient-to-tl from-black to-gray-700 text-white px-4 py-2 ml-4 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity duration-300 animate-in zoom-in ">
+                  <Button className="bg-transparent uppercase rounded-full">
+                    Add to Cart
+                  </Button>
+                </div>
+              </div>
+
+              <div
+                aria-label="check-terms-condition"
+                className="w-full py-2 flex items-center"
+              >
+                <input type="checkbox" id="terms" className="cursor-pointer" />
+                <label
+                  htmlFor="terms"
+                  className="text-sm ml-1 text-gray-500 cursor-pointer"
                 >
-                  Cancel
-                </button>
+                  I agree to{" "}
+                  <span className="text-blue-600 font-semibold">
+                    terms and conditions
+                  </span>
+                </label>
               </div>
-            </section>
 
-            <section className="product-reviews">
-              <header className="reviews-header">
-                <h3 className="section-title">Customer Reviews</h3>
-                <div className="reviews-info">
-                  <div className="reviews-stars">
-                    <Rates stars={5} rate={3} isFixed={true} />
-                    <span className="reviews-count">based on 3 reviews</span>
+              <div aria-label="btn-buy" className="w-full mt-2 mb-1">
+                <Button className="text-xl w-full bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                  Buy Now <MdPayment className="inline-block ml-2" />
+                </Button>
+              </div>
+
+              <div
+                aria-label="product-btns-options"
+                className="flex items-center justify-between w-full"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    aria-label="wishlist-option"
+                    className="group flex items-center cursor-pointer"
+                  >
+                    <HiOutlineHeart className="text-xs text-black group-hover:text-red-600 transition-colors duration-300 cursor-pointer" />
+                    <span className="text-sm text-gray-500 ml-1 group-hover:text-red-600">
+                      Add to Wishlist
+                    </span>
                   </div>
 
-                  <div className="reviews-action">
-                    <button
-                      className="write-review btn btn-primary"
-                      onClick={() => setOpenReview((o) => !o)}
-                    >
-                      {openReview ? "Close Review" : "Write a review"}
-                    </button>
+                  <div
+                    aria-label="compare-option"
+                    className="group flex items-center cursor-pointer"
+                  >
+                    <BiLayer className="text-xs text-black group-hover:text-yellow-600 transition-colors duration-300" />
+                    <span className="text-sm text-gray-500 ml-1 group-hover:text-yellow-600">
+                      Add Compare
+                    </span>
                   </div>
                 </div>
-              </header>
-              <main className="reviews-reply">
-                <div className="review-box">
-                  <header>
-                    <div className="review-star">
-                      <Rates stars={5} rate={3} isFixed={true} />
-                    </div>
 
-                    <div className="review-info">
-                      <h5 className="review-title">
-                        Quality of Product is AMAZING!!!
-                      </h5>
-                      <div className="">
-                        <span className="review-name">John Doe</span> on{" "}
-                        <span className="review-date">12/12/2021</span>
-                      </div>
-                    </div>
-                  </header>
-                  <main className="review-content">
-                    <div className="review-comment">
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quae, voluptas! Lorem ipsum dolor
-                      </p>
-                    </div>
-
-                    <div className="review-reply">
-                      <button className="btn btn-primary">Reply</button>
-
-                      <form></form>
-                    </div>
-                  </main>
+                <div
+                  aria-label="share-btn"
+                  className="group flex items-center cursor-pointer hover:text-blue-500"
+                >
+                  <BiShareAlt className="text-xs text-black group-hover:text-blue-600 transition-colors duration-300" />
+                  <span className="font-semibold ml-1 group-hover:text-blue-600">
+                    Share
+                  </span>
                 </div>
-                {/*  */}
-                <div className="review-box">
-                  <header>
-                    <div className="review-star">
-                      <Rates stars={5} rate={3} isFixed={true} />
-                    </div>
+              </div>
 
-                    <div className="review-info">
-                      <h5 className="review-title">
-                        Quality of Product is AMAZING!!!
-                      </h5>
-                      <div className="">
-                        <span className="review-name">John Doe</span> on{" "}
-                        <span className="review-date">12/12/2021</span>
-                      </div>
-                    </div>
-                  </header>
-                  <main className="review-content">
-                    <div className="review-comment">
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quae, voluptas! Lorem ipsum dolor
-                      </p>
-                    </div>
+              <hr className="w-full h-0.5 bg-gray-200 my-3" />
 
-                    <div className="review-reply">
-                      <button className="btn btn-primary">Reply</button>
+              <div className="flex flex-col gap-4 w-full">
+                <div
+                  aria-label="shipping-and-returns"
+                  className="flex items-center justify-between w-full"
+                >
+                  <h5 className="text-lg font-semibold flex items-center">
+                    <BiShield className="text-lg mr-1" />
+                    Shipping & Returns
+                  </h5>
 
-                      <form></form>
-                    </div>
-                  </main>
+                  <span className="text-sm font-semibold">
+                    <MdMail className="inline-block mr-1" />
+                    <a href="mailto:" className="text-gray-800 hover:underline">
+                      Contact us
+                    </a>
+                  </span>
                 </div>
-                {/*  */}
-                <div className="review-box">
-                  <header>
-                    <div className="review-star">
-                      <Rates stars={5} rate={3} isFixed={true} />
-                    </div>
 
-                    <div className="review-info">
-                      <h5 className="review-title">
-                        Quality of Product is AMAZING!!!
-                      </h5>
-                      <div className="">
-                        <span className="review-name">John Doe</span> on{" "}
-                        <span className="review-date">12/12/2021</span>
-                      </div>
-                    </div>
-                  </header>
-                  <main className="review-content">
-                    <div className="review-comment">
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quae, voluptas! Lorem ipsum dolor
-                      </p>
-                    </div>
+                <div aria-label="features" className="flex flex-col">
+                  <div aria-label="deilvery">
+                    <MdLocalShipping className="inline-block text-lg mr-1" />
+                    <span className="text-sm text-gray-500">
+                      Estimated Delivery:{" "}
+                      <span className="font-bold">3-5 days</span>{" "}
+                    </span>
+                  </div>
 
-                    <div className="review-reply">
-                      <button className="btn btn-primary">Reply</button>
-
-                      <form></form>
-                    </div>
-                  </main>
+                  <div aria-label="refund">
+                    <GiReturnArrow className="inline-block text-lg mr-1" />
+                    <span className="text-sm text-gray-600">
+                      Return within <span className="font-bold">30 days</span>{" "}
+                      of purchase. Taxes are non-refundable
+                    </span>
+                  </div>
                 </div>
-                {/*  */}
-              </main>
-            </section>
+              </div>
 
-            <section className="special-collection">
-              <h3 className="section-title">You may like this</h3>
-              <Grid2Products products={products} Card={HorizontalProduct} />
-            </section>
+              <hr className="w-full h-0.5 bg-gray-200 my-3" />
+
+              <div aria-label="details" className="w-full">
+                <dl className="w-full">
+                  <div className="flex items-center w-full justify-between">
+                    <dt className="font-semibold">Availability:</dt>
+                    <dd className="text-sm text-gray-600">In Stock</dd>
+                  </div>
+
+                  <div className="flex items-center w-full justify-between">
+                    <dt className="font-semibold">Vendor</dt>
+                    <dd className="text-sm text-gray-600">Blink</dd>
+                  </div>
+
+                  <div className="flex items-center w-full justify-between">
+                    <dt className="font-semibold">Category</dt>
+                    <dd className="text-sm text-gray-600">Security Cameras</dd>
+                  </div>
+
+                  <div className="flex items-center w-full justify-between">
+                    <dt className="font-semibold">Tags</dt>
+                    <dd className="text-sm text-gray-600">
+                      Home Security, Camera, Blink
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div
+                aria-label="payment-allowed"
+                className="w-full bg-gray-200 p-4 rounded-lg"
+              >
+                <h5 className="text-sm font-semibold text-center">
+                  Guarantee safe & Secure checkout
+                </h5>
+
+                <div className="flex items-center justify-center gap-1">
+                  {paymentMethods.map((method) => (
+                    <img
+                      src={method}
+                      alt={method}
+                      key={method}
+                      className="w-8 h-8"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <Box className="w-full mt-6">
+          <Tabs tabs={["description", "reviews"]}>
+            <div className="w-full mt-6">
+              <h4 className="text-2xl font-semibold mb-4">
+                Product Description
+              </h4>
+              <p className="text-gray-700">
+                iPad Air with a vibrant 10.9-inch Liquid Retina display.
+                Breakthrough Apple M1 chip for faster performance, making iPad
+                Air super-powerful for creativity and mobile gaming. Get Touch
+                ID, an advanced camera, lightning-fast 5G2 and Wi-Fi 6, a USB-C
+                port, and support for the Magic Keyboard and Apple Pencil (2nd
+                generation).
+              </p>
+
+              <img src="/t-shirt10.webp" className="w-[400px] max-w-full" />
+            </div>
+
+            <div className="w-full mt-6">
+              <h4 className="text-2xl font-semibold mb-4">Customer Reviews</h4>
+              <p className="text-gray-700">
+                "I love this camera system! It's easy to set up and the video
+                quality is excellent. I feel much safer knowing I can check on
+                my home anytime." - Sarah J.
+              </p>
+            </div>
+          </Tabs>
+        </Box>
+
+        <Box className="w-full mt-6">
+          <SectionHeader title="Related Products" />
+
+          <Carousel>
+            {trendingProducts.map((product, index) => (
+              <div className="flex-shrink-0 basis-full sm:basis-1/3 md:basis-1/4 lg:basis-1/6">
+                <VerticalProduct product={product} key={index} />
+              </div>
+            ))}
+          </Carousel>
+        </Box>
       </div>
     </>
   );
