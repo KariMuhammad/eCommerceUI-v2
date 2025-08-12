@@ -1,58 +1,22 @@
-import { Link } from "react-router-dom";
-import { BsArrowBarRight } from "react-icons/bs";
-
 import { Breadcrump } from "@/components";
+import LoginForm from "@/components/LoginForm";
 
 const Login = () => {
   return (
-    <div className="pg-login">
-      <div className="breadcrump">
+    <div className="">
+      <div aria-label="breadcrump" className="">
         <Breadcrump
           links={[
             { name: "Home", link: "/" },
-            { name: "Login", link: "/login" },
+            { name: "Login", link: "/login", active: true },
           ]}
         />
       </div>
 
-      <div className="login-content">
-        <div className="container-xxl">
-          <div className="auth-card">
-            <h2>Login</h2>
-            <form className="" action="">
-              <div className="form-control">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
+      <h2 className="text-xl w-fit text-center font-bold mb-4 mx-auto px-3 py-1 border border-blue-700">Sign in</h2>
 
-              <div className="form-control">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                />
-              </div>
-
-              <Link to="/forgot-password" className="bg-opacity-25">
-                Forgot Password?
-              </Link>
-
-              <div className="buttons">
-                <button className="active" type="submit">
-                  Login
-                </button>
-                <Link to="/register" className="sbg-opacity-25">
-                  Register <BsArrowBarRight />
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
+      <div aria-label="login-content" className="max-w-xl mx-auto ">
+        <LoginForm />
       </div>
     </div>
   );

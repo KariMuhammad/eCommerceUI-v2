@@ -34,7 +34,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/store" element={<Store />} />
-            <Route path="/product/:id" element={<Product />} />
+            <Route path="/product/:slug" element={<Product />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/compare-products" element={<CompareProducts />} />
             <Route path="/wishlist" element={<Wishlist />} />
@@ -45,7 +45,10 @@ function App() {
             <Route path="/blog/:slug" element={<Blog />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/privacy-policy" element={<Privacy />} />
-            <Route path="/terms-and-conditions" element={<TermsCondition />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsCondition />}
+            />
             <Route path="/shipping-policy" element={<ShippingPolicy />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/cart" element={<Cart />} />

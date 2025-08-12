@@ -1,9 +1,9 @@
-import DateCountDown from "@/utils";
+import { DateCountDown } from "@/utils";
 import { useEffect, useState } from "react";
 
 type ProductDiscountCountDownProps = {
   productId: string; // Unique identifier for the product
-  discountEndTime: string; // The end time of the discount
+  discountEndTime: Date; // The end time of the discount
   // onDiscountEnd?: (productId: string) => void; // Callback when discount ends
 };
 

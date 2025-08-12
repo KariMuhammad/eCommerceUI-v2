@@ -5,7 +5,7 @@ export default function Blog() {
       className="relative w-96 shadow-md rounded-md bg-white"
     >
       <div aria-label="image-wrapper" className="">
-        <img src="/public/blog-1.webp" />
+        <img src="/public/blog-1.webp" className="w-full" />
       </div>
 
       <div aria-label="content-blog" className="p-5">

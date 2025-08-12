@@ -1,10 +1,18 @@
 - [x] Breadcrumbs
 - [x] Categories
-- [!x] (Left) Filters (rest: mini-products)
-- [] (Right) working
+- [x] (Left) Filters (rest: mini-products)
+- [x] (Right) working
 
-  - [] Products Cards
-  - [] Grid
+  - [x] Products Cards
+  - [x] Grid
 
-- [] Load more products
-- Component for background + round
+- [x] Load more products
+- [x] Component for background + round
+
+---
+
+- [ Auth Pages ]
+  - [x] Login
+  - [x] Register
+  - [ ] Wishlist
+  - [ ] Cart

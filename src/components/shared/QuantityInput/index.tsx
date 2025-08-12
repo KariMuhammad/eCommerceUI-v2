@@ -2,8 +2,12 @@ import { useState } from "react";
 import { BiMinus } from "react-icons/bi";
 import { PiPlus } from "react-icons/pi";
 
-export default function QuantityInput() {
-  const [inputValue, setInputValue] = useState(1);
+type QuantityInputProps = {
+  maxQty?: number;
+}
+
+export default function QuantityInput({ maxQty }: QuantityInputProps) {
+  const [inputValue, setInputValue] = useState(+(!!maxQty)); // if maxQty exist so start count from 1, else start from 0
 
   const handleDecrease = () => {
     if (inputValue > 1) {
@@ -12,6 +16,9 @@ export default function QuantityInput() {
   };
 
   const handleIncrease = () => {
+    if (!maxQty) return;
+    if (maxQty && inputValue >= maxQty) return;
+
     setInputValue((prev) => prev + 1);
   };
 

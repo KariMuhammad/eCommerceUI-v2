@@ -31,7 +31,7 @@ const BannerSection = () => {
                   id="hero-banner"
                   className="embla__slide basis-full min-w-full"
                 >
-                  <Banner key={index} attrs={{ className: "" }}>
+                  <Banner key={index} className="h-full p-3">
                     <img
                       className="w-full h-full block object-cover rounded-2xl"
                       src={banner.image}
@@ -48,7 +48,7 @@ const BannerSection = () => {
                         {banner.description}
                       </p>
                       <Link to={"#"}>
-                        <Button attrs={{ className: "uppercase font-bold" }}>
+                        <Button className="uppercase font-bold">
                           Discover Now
                         </Button>
                       </Link>
@@ -72,10 +72,7 @@ const BannerSection = () => {
                   className="sm:basis-1/2 ps-3 p-3"
                 >
                   <Banner
-                    attrs={{
-                      className:
-                        "group h-full my-2 lg:my-0 overflow-hidden rounded-xl",
-                    }}
+                    className="group h-full my-2 lg:my-0 overflow-hidden rounded-xl"
                   >
                     <img
                       className="w-full h-full transition-all object-cover object-center rounded-xl group-hover:scale-110"

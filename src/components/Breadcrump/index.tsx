@@ -12,6 +12,8 @@ const Breadcrump = ({ links }: { links: BreadcrumpProps[] }) => {
     return links.findIndex((elm) => elm.active);
   });
 
+  console.log(active)
+
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -19,9 +21,7 @@ const Breadcrump = ({ links }: { links: BreadcrumpProps[] }) => {
           {links.map((link, index) => (
             <>
               <li
-                className={`${
-                  active === index ? "bg-blue-500 text-white px-2 py-1" : ""
-                }`}
+                className={`p-2 rounded-sm ${active === index ? "bg-blue-500 text-white px-2 py-1" : ""}`}
                 onClick={() => setActive(index)}
                 key={index}
               >

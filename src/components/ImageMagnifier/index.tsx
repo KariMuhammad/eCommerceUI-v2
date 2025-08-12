@@ -12,49 +12,48 @@ const ImageMagnifier = ({
   lensSize = 100,
 }: ImageMagnifierProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [lensPos, setLensPos] = useState({ x: 0, y: 0, visible: false });
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [imageOffset, setImageOffset] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    const bounds = imgRef.current?.getBoundingClientRect();
-    if (!bounds) return;
+    const imgBounds = imgRef.current?.getBoundingClientRect();
+    const containerBounds = containerRef.current?.getBoundingClientRect();
+
+    if (!imgBounds || !containerBounds) return;
+
     // Calculate mouse position relative to the image
-    const x = e.clientX - bounds.left;
-    const y = e.clientY - bounds.top;
+    const x = e.clientX - imgBounds.left;
+    const y = e.clientY - imgBounds.top;
+
+    // Store image dimensions and offset from container
+    const offsetX = imgBounds.left - containerBounds.left;
+    const offsetY = imgBounds.top - containerBounds.top;
 
     setImageSize({
-      width: bounds.width,
-      height: bounds.height,
+      width: imgBounds.width,
+      height: imgBounds.height,
     });
 
-    console.log("Mouse event:", e.clientX, e.clientY);
-    console.log("Image bounds:", bounds);
-    console.log("Mouse position:", { x, y });
+    setImageOffset({ x: offsetX, y: offsetY });
 
-    // Clamp lens inside image
-    /**
-     * How this formula figured out ?
-     * 1. We want the lens to be centered around the mouse position.
-     * 2. The lens should not go outside the image bounds.
-     * 3. The lens size is subtracted from the mouse position to center it.
-     * 4. The result is clamped to ensure it stays within the image bounds.
-     * 5. The maximum value is the image width/height minus the lens size to ensure it doesn't overflow.
-     * 6. The minimum value is 0 to ensure it doesn't go negative.
-     *  This ensures the lens is always fully visible within the image.
-     * This is why we use Math.max and Math.min to clamp the values.
-     * This way, the lens will always be positioned correctly
-     * and will not overflow the image boundaries.
-     */
+    // Clamp lens inside image bounds
     const lensX = Math.max(
       0,
-      Math.min(x - lensSize / 2, bounds.width - lensSize)
+      Math.min(x - lensSize / 2, imgBounds.width - lensSize)
     );
     const lensY = Math.max(
       0,
-      Math.min(y - lensSize / 2, bounds.height - lensSize)
+      Math.min(y - lensSize / 2, imgBounds.height - lensSize)
     );
 
-    setLensPos({ x: lensX, y: lensY, visible: true });
+    // Position lens relative to container (accounting for image offset)
+    setLensPos({
+      x: lensX + offsetX,
+      y: lensY + offsetY,
+      visible: true
+    });
   };
 
   const handleMouseLeave = () => {
@@ -62,15 +61,17 @@ const ImageMagnifier = ({
   };
 
   return (
-    <div className="relative">
-      <img
-        ref={imgRef}
-        src={src}
-        className="w-full h-full object-cover rounded"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        alt="Zoomable"
-      />
+    <div ref={containerRef} className="relative">
+      <div className="w-1/2 mx-auto">
+        <img
+          ref={imgRef}
+          src={src}
+          className="w-full h-full object-cover rounded"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          alt="Zoomable"
+        />
+      </div>
 
       {lensPos.visible && (
         <>
@@ -91,12 +92,8 @@ const ImageMagnifier = ({
             style={{
               backgroundImage: `url(${src})`,
               backgroundRepeat: "no-repeat",
-              backgroundSize: `${imageSize.width * zoom}px ${
-                imageSize.height * zoom
-              }px`,
-              backgroundPosition: `-${lensPos.x * zoom}px -${
-                lensPos.y * zoom
-              }px`,
+              backgroundSize: `${imageSize.width * zoom}px ${imageSize.height * zoom}px`,
+              backgroundPosition: `-${(lensPos.x - imageOffset.x) * zoom}px -${(lensPos.y - imageOffset.y) * zoom}px`,
             }}
           />
         </>

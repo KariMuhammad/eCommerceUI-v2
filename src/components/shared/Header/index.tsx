@@ -10,14 +10,17 @@ import AuthIcon from "@/components/AuthIcon";
 import CartIcon from "@/components/CartIcon";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import CurrencySwitch from "@/components/CurrencySwitch";
-import CompareProductIcon from "@/components/CompareProductIcon";
 import ShopByDepartment from "@/components/ShopByDepartment";
 import WishlistIcon from "@/components/WishlistIcon";
 import SearchInput from "../SearchInput";
 import MobileSideBar from "../MobileSideBar";
 import { TbDiscountFilled } from "react-icons/tb";
+import { BiUser } from "react-icons/bi";
+import useAuth from "@/hooks/use-auth";
 
 const Header = () => {
+  const { isAuthenticated } = useAuth();
+
   const [openMenu, setOpenMenu] = useState(false);
   console.log("showSidebar", openMenu);
 
@@ -80,28 +83,22 @@ const Header = () => {
                 </Link>
               </div>
 
-              <div className="hidden lg:block flex-1 mx-6">
+              <div className="hidden lg:block basis-3/4 mx-6">
                 {/* SEARCH */}
                 <div className="search">
                   <SearchInput />
                 </div>
+              </div>
 
-                {/* Options */}
-                <div
-                  aria-label="header-links"
-                  // TODO: hidden in all screens for now, change after
-                  className="hidden flex-wrap items-center justify-between"
-                >
-                  <CompareProductIcon />
+              {/* Options */}
+              <div className="flex basis-1/4 items-center justify-between gap-3">
+                <CartIcon />
+                <WishlistIcon />
 
-                  <WishlistIcon />
-
-                  <AuthIcon />
-                </div>
+                {isAuthenticated ? <><BiUser size="2rem" className="-mr-5" /> Profile</> : <AuthIcon />}
               </div>
 
               {/* Common component */}
-              <CartIcon />
             </header>
 
             {/* Bottom-Middle Header */}
@@ -123,9 +120,8 @@ const Header = () => {
                   {["Home", "Store", "Blog", "Contact"].map((link) => (
                     <NavLink
                       key={link}
-                      to={`/${
-                        link.toLowerCase() === "home" ? "" : link.toLowerCase()
-                      }`}
+                      to={`/${link.toLowerCase() === "home" ? "" : link.toLowerCase()
+                        }`}
                       className="transition-all text-white py-2 px-3 text-sm font-bold uppercase hover:bg-blue-600"
                     >
                       {link}

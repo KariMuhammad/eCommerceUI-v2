@@ -1,14 +1,23 @@
-export function ProductDiscount() {
+import PriceWithDiscount from "@/components/shared/PriceWithDiscount";
+
+type ProductDiscountProps = {
+  originalPrice: number;
+  discount: number;
+  salePrice?: number;
+  savingAmount: number;
+  textSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+}
+
+export function ProductDiscount({ originalPrice, discount, savingAmount, textSize = "4xl" }: ProductDiscountProps) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
-        <span className="text-5xl font-bold">$69.00</span>
-        <span className="text-xl line-through text-gray-500">$89.00</span>
-      </div>
+      <PriceWithDiscount price={originalPrice} discount={discount} textSize={textSize} />
 
-      <div className="text-xl text-green-600 font-semibold">
-        You save $20.00 (22%)
-      </div>
+      {discount > 0 && (
+        <div className="text-xl text-green-600 font-semibold">
+          You save $<span>{savingAmount}</span> (<span>{discount}%</span>)
+        </div>
+      )}
     </div>
   );
 }

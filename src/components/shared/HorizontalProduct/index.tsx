@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Rates from "../Rates";
 import PriceWithDiscount from "../PriceWithDiscount";
 import ProductOptions from "@/components/ProductOptions";
+import ProductDiscountCountDown from "@/components/ProductDiscountCountDown";
 
 type HorizontalProductProps = {
   product: Product;
@@ -18,12 +19,14 @@ const HorizontalProduct = ({
   imgSize = "w-72",
   className = "",
 }: HorizontalProductProps) => {
+  // console.log(product);
+
   return (
     <div
       aria-label="product-card"
-      className={`group relative flex flex-col sm:flex-row bg-white p-3 shadow-sm rounded-xl ${className}`}
+      className={`m-1 group relative flex flex-col sm:flex-row bg-white p-3 shadow-sm rounded-xl ${className}`}
     >
-      <div aria-label="product-image" className={`relative ${imgSize}`}>
+      <div aria-label="product-image" className={`relative w-1/3 p-3 ${imgSize}`}>
         {showInUI.image1 && (
           <img
             className="transition-all w-full scale-100 group-hover:scale-0"
@@ -43,13 +46,13 @@ const HorizontalProduct = ({
         {showInUI.options && <ProductOptions />}
       </div>
 
-      <div aria-label="product-content" className="flex flex-col gap-y-2 p-3">
+      <div aria-label="product-content" className="flex flex-col w-full gap-y-2 px-3">
         <h3
           aria-label="product-title"
           className="text-lg font-bold line-clamp-2"
         >
           {/* Use <Link> instead */}
-          <Link to="/product/1">{product.name}</Link>
+          <Link to={`/product/${product.slug}`}>{product.name}</Link>
         </h3>
 
         <div aria-label="product-rate" className="flex items-center gap-1">
@@ -58,36 +61,45 @@ const HorizontalProduct = ({
           {/* (reviews) Should be separated on rates */}
           {showInUI.rate && (
             <div aria-label="product-reviews" className="">
-              (4 reviews)
+              {product.rate ? <>({product.rate} reviews)</> : <>(4 reviews)</>}
             </div>
           )}
         </div>
 
         <div aria-label="product-price" className="flex items-center gap-1">
           {showInUI.price && (
-            <>
-              <PriceWithDiscount
-                price={product.price}
-                discount={product.discount}
-              />
-            </>
+            <PriceWithDiscount
+              price={product.price}
+              discount={product.discount}
+            />
           )}
         </div>
 
-        <p
-          aria-label="product-discount"
-          className="absolute left-1 top-1 bg-green-700 text-white py-1 px-4"
-        >
-          -{product.discount}%
-        </p>
+        {product.discount > 0 && (
+          <p
+            aria-label="product-discount"
+            className="absolute left-1 top-1 bg-red-400 text-white py-1 px-3 rounded-e-xl border-l border-red-600"
+          >
+            -{product.discount}%
+          </p>
+        )}
+
+        {product.discountEndTime && (
+          <ProductDiscountCountDown
+            discountEndTime={product.discountEndTime}
+            productId={(product.id as string)!}
+          />
+        )}
 
         {showInUI.details && (
           <div aria-label="product-details" className="">
-            <ul className="m-0 p-0 text-gray-500 list-disc list-inside">
-              <li>Bass and stereo sound.</li>
-              <li>Display with 3088 x 1440 pixels resolution.</li>
-              <li>Memory, Storage & SIM: 12GB RAM, 256GB</li>
-            </ul>
+            {product.details?.description ? <div className="line-clamp-6" dangerouslySetInnerHTML={{ __html: product.details?.description }} /> : <>
+              <ul className="m-0 p-0 text-gray-500 list-disc list-inside">
+                <li>Bass and stereo sound.</li>
+                <li>Display with 3088 x 1440 pixels resolution.</li>
+                <li>Memory, Storage & SIM: 12GB RAM, 256GB</li>
+              </ul>
+            </>}
           </div>
         )}
       </div>

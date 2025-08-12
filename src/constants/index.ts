@@ -7,3 +7,6 @@ export { default as categories } from "./categories";
 export { default as mobiles } from "./mobiles";
 export { default as hero_banners } from "./hero-banners";
 export { default as compare_products } from "./compare-products";
+
+
+export const API_BASE_URL = "http://localhost:3000";

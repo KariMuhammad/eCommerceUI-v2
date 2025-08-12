@@ -1,12 +1,12 @@
-interface BannerProps {
+interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  attrs?: React.HTMLAttributes<HTMLDivElement>;
 }
-const Banner = ({ children, attrs }: BannerProps) => {
+const Banner = ({ children, ...attributes }: BannerProps) => {
   return (
     <div
       aria-label="banner"
-      className={`relative h-[483px] ${attrs?.className}`}
+      {...attributes}
+      className={`relative ${attributes.className}`}
     >
       {children}
     </div>
