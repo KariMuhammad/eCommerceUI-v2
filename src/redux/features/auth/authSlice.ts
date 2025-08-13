@@ -1,4 +1,5 @@
 // authSlice.ts - Create a separate slice for persisting auth data
+import { isTokenExpired } from '@/utils';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -32,10 +33,20 @@ const authSlice = createSlice({
             state.username = "";
             state.isAuthenticated = false;
         },
+
+        checkTokenExpiration: (state) => {
+            if (state.token && isTokenExpired(state.token)) {
+                // Token is expired, clear auth state
+                state.token = "";
+                state.username = "";
+                state.email = "";
+                state.isAuthenticated = false;
+            }
+        },
     },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, checkTokenExpiration } = authSlice.actions;
 
 // Persist configuration for auth slice
 const authPersistConfig = {

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Rates } from '../shared';
 import { ReviewsResponse } from '@/types';
 import Button from '../shared/Button';
 import ReviewForm from '../ReviewForm';
+import Loading from '../shared/Loading';
 
 
 
@@ -13,6 +14,20 @@ interface CustomerReviewsProps {
 const CustomerReviews: React.FC<CustomerReviewsProps> = ({
     reviews: data = undefined
 }) => {
+    const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
+
+    const handleWriteReviewClick = () => {
+        setShowReviewForm(true);
+    };
+
+    const handleCloseReviewForm = () => {
+        setShowReviewForm(false);
+    };
+
+
+    if (!data) {
+        return <Loading />
+    }
 
     const { reviews, stats } = data ?? {};
 
@@ -27,10 +42,10 @@ const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                     based on {stats?.totalReviews} reviews
                 </div>
 
-                <Button className="w-fit rounded-md">Write a review</Button>
+                <Button className="w-fit rounded-md" onClick={handleWriteReviewClick}>Write a review</Button>
             </div>
 
-            <ReviewForm />
+            <ReviewForm productId={reviews[0]?.product._id} isVisible={showReviewForm} onClose={handleCloseReviewForm} />
 
             <hr className="bg-gray-200 h-1 mb-4" />
 
@@ -81,6 +96,7 @@ const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                         <button
                             // onClick={handleWriteReviewClick}
                             className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors font-medium"
+                            onClick={handleWriteReviewClick}
                         >
                             Be the first to review
                         </button>

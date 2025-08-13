@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { clsx, ClassValue } from "clsx";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { toast } from "sonner";
 import { Product, ProductResponse } from "@/types";
@@ -34,23 +34,6 @@ export function DateCountDown(date: Date) {
     ),
   };
 }
-
-export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000" // API Server
-})
-
-axios.interceptors.request.use((config) => {
-  const localStorageState = localStorage.getItem("persist:auth") ?? "";
-  const accessToken = JSON.parse(localStorageState).token;
-
-  console.log("AccessToken", accessToken);
-
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
-  }
-
-  return config;
-})
 
 export function catchAsyncThunk<T>(asyncFn: () => Promise<T>): Promise<T> {
   return (async () => {
@@ -122,6 +105,39 @@ export const createBaseQueryWithAuth = (baseUrl: string) => {
 
     return result;
   };
+};
+
+/**
+ * Check if Token is expired or still OK
+ * @param token 
+ * @returns 
+ */
+export const isTokenExpired = (token: string): boolean => {
+  if (!token) return true;
+
+  try {
+    // Decode JWT token (without verification - just to read payload)
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+
+    // Check if token has expired (exp is in seconds)
+    return payload.exp < currentTime;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return true; // Treat invalid tokens as expired
+  }
+};
+
+export const getTokenExpirationTime = (token: string): number | null => {
+  if (!token) return null;
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000; // Convert to milliseconds
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
 };
 
 export const mapProductFromApi = (apiResponse: ProductResponse): Product => ({

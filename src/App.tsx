@@ -23,10 +23,11 @@ import ShippingPolicy from "@/pages/ShippingPolicy";
 import Product from "@/pages/Product";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
+import AuthGuard from "./layouts/AuthGuard";
 
 function App() {
   return (
-    <>
+    <AuthGuard>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -56,7 +57,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </AuthGuard>
   );
 }
 

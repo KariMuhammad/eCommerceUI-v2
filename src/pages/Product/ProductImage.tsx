@@ -29,7 +29,7 @@ export function ProductImage({ images }: ProductImageProps) {
             <img
               src={image}
               alt={`mini-sample-${index}`}
-              className="w-full  object-cover rounded-lg"
+              className="w-full h-full object-cover rounded-lg"
               onClick={() => handleImageChange(image)}
             />
           </div>

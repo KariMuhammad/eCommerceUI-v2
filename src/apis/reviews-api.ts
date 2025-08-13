@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/utils"
+import axiosInstance from "@/utils/api"
 
 export const getReviewsOfProduct = async (productId: string) => {
     const response = await axiosInstance.get(`products/${productId}/reviews/`);

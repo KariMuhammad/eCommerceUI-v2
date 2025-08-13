@@ -18,7 +18,6 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import { useGetProductBySlugQuery } from "@/redux/features/products/productsApi";
 import { useParams } from "react-router-dom";
 import Loading from "@/components/shared/Loading";
-import { useEffect } from "react";
 import CustomerReviews from "@/components/CustomerReviews";
 import { useGetReviewsOfProductQuery } from "@/redux/features/reviews";
 
@@ -28,7 +27,7 @@ const Product = () => {
   const { data: product, isLoading } = useGetProductBySlugQuery(slug!, { skip: !slug });
   console.log("product", product)
 
-  const { data: reviews, isLoading: isLoadingReviews } = useGetReviewsOfProductQuery(product?._id, { skip: !product?._id });
+  const { data: reviews } = useGetReviewsOfProductQuery(product?._id, { skip: !product?._id });
 
   if (isLoading)
     return <Loading />

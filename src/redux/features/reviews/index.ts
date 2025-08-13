@@ -1,6 +1,6 @@
 import { getReviewsOfProduct } from "@/apis/reviews-api";
 import { API_BASE_URL } from "@/constants";
-import { ReviewsResponse } from "@/types";
+import { CreateReviewRequest, Review, ReviewsResponse } from "@/types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -29,8 +29,39 @@ export const reviewsApi = createApi({
                 ...result.reviews.map(review => ({ type: "Review" as const, id: review._id })),
                 { type: "Review", id: "LIST" }
             ] : [{ type: "Review" as const, id: "LIST" }]
+        }),
+
+        createReview: builder.mutation<Review, CreateReviewRequest>({
+            query: (data) => ({
+                url: `/${data.productId}/reviews`,
+                method: "POST",
+                body: data,
+            }),
+
+            invalidatesTags: (result) => [{ type: "Review", id: "LIST" }],
+
+            transformResponse: (response: { data: Review }) => response.data,
+
+            async onQueryStarted(data, { dispatch, queryFulfilled }) {
+                const patches = [];
+
+                try {
+                    const { data: newReview } = await queryFulfilled;
+
+                    patches.push(
+                        dispatch(reviewsApi.util.updateQueryData("getReviewsOfProduct", data.productId, (draft) => {
+                            draft.reviews.unshift(newReview);
+                            draft.stats.totalReviews++;
+                            draft.stats.averageRating += newReview.stars / draft.stats.totalReviews;
+                        }))
+                    )
+                } catch (error) {
+                    console.log("Error", error);
+                    patches.forEach(patch => patch.undo());
+                }
+            }
         })
     })
 })
 
-export const { useGetReviewsOfProductQuery } = reviewsApi;
+export const { useGetReviewsOfProductQuery, useCreateReviewMutation } = reviewsApi;
