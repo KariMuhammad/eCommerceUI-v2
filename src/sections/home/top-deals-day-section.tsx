@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import topDealsDaysProducts from "@/constants/top-deals-days-products";
 import CountdownTimer from "@/components/CountdownTimer";
 import { HorizontalProduct } from "@/components/shared";
 import Carousel from "@/components/shared/Carousel";
 import SectionHeader from "@/components/shared/SectionHeader";
+import { useGetProductsQuery } from "@/redux/features/products/productsApi";
+import { hideInUI } from "@/constants/top-deals-days-products";
 
 export default function TopDealsDaysSection() {
   const [mobileView, setMobileView] = useState(false);
+
+  const { data: topDealsDaysProducts } = useGetProductsQuery({});
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
@@ -32,13 +35,13 @@ export default function TopDealsDaysSection() {
         <div className="">
           <Carousel
             emblaContainerClass="justify-between gap-3"
-            active={mobileView}
+          // active={mobileView}
           >
-            {topDealsDaysProducts.slice(0, 3).map((map, index) => (
+            {topDealsDaysProducts?.products.slice(0, 3).map((map, index) => (
               <HorizontalProduct
                 key={index}
-                product={map.product}
-                showInUI={map.showInUI}
+                product={map}
+                showInUI={hideInUI("id")}
               />
             ))}
           </Carousel>

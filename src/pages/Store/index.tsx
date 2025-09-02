@@ -5,7 +5,7 @@ import Box from "@/components/shared/Box";
 import Carousel from "@/components/shared/Carousel";
 import SectionHeader from "@/components/shared/SectionHeader";
 import ShopSidebar from "@/components/ShopSidebar";
-import { products } from "@/constants";
+// import { products } from "@/constants";
 
 const Store = () => {
   return (
@@ -51,7 +51,7 @@ const Store = () => {
         </div>
 
         <div aria-label="shop-products" className="basis-4/5 mx-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -67,7 +67,7 @@ const Store = () => {
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
+          </div> */}
 
           <div aria-label="loading-button" className="w-full text-center my-11">
             <button

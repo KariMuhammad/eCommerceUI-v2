@@ -7,7 +7,7 @@ export default function SearchByCategoryOptions() {
   const toggleMenu = () => setOpenMenu((s) => !s);
 
   return (
-    <div className="h-full z-[9999] relative">
+    <div className="relative h-full z-40">
       <button
         className={cn({
           "bg-white hover:bg-blue-700 hover:text-white border-white flex items-center justify-between border-r border-r-black text-black py-2 px-2 h-full":

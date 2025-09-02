@@ -52,8 +52,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ isVisible, productId, onClose }
 
         console.log(formData);
         // Handle form submission here
-        createReview(formData);
-
+        createReview(formData).then(() => console.log("review created"));
         // After successful submission, you might want to hide the form
     };
 
@@ -78,11 +77,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ isVisible, productId, onClose }
         return null;
     }
 
-    if (isSuccess) handleClose();
+    if (isSuccess && !isError) onClose();
 
     if (isError) {
         console.error("Error in create product", error)
-        toast.error(error.data.errors.message ?? "Error in create product");
+        toast.error(error.data.errors.message ?? "Error in create review");
     }
 
     return (

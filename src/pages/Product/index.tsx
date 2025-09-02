@@ -1,28 +1,30 @@
-import { Breadcrump } from "@/components";
+import { BiLayer, BiShareAlt, BiShield } from "react-icons/bi";
 import { GiFlamer, GiReturnArrow } from "react-icons/gi";
-import { Color, Rates, VerticalProduct } from "@/components/shared";
-import { ProductDiscount } from "./ProductDiscount";
 import { BsEyeFill } from "react-icons/bs";
-import QuantityInput from "@/components/shared/QuantityInput";
-import Button from "@/components/shared/Button";
 import { MdLocalShipping, MdMail, MdPayment } from "react-icons/md";
 import { HiOutlineHeart } from "react-icons/hi";
-import { BiLayer, BiShareAlt, BiShield } from "react-icons/bi";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Breadcrump } from "@/components";
+import { Color, Rates } from "@/components/shared";
+import Loading from "@/components/shared/Loading";
+import { ProductDiscount } from "./ProductDiscount";
+import QuantityInput from "@/components/shared/QuantityInput";
+import Button from "@/components/shared/Button";
 import paymentMethods from "@/constants/payment-methods";
 import { ProductImage } from "./ProductImage";
 import Tabs from "@/components/shared/Tabs";
 import Box from "@/components/shared/Box";
-import trendingProducts from "@/constants/trending-products";
-import Carousel from "@/components/shared/Carousel";
-import SectionHeader from "@/components/shared/SectionHeader";
 import { useGetProductBySlugQuery } from "@/redux/features/products/productsApi";
-import { useParams } from "react-router-dom";
-import Loading from "@/components/shared/Loading";
 import CustomerReviews from "@/components/CustomerReviews";
+
 import { useGetReviewsOfProductQuery } from "@/redux/features/reviews";
+import { addToWishlist } from "@/apis/products-api";
+import { RelatedProducts } from "./RelatedProducts";
+import { useEffect } from "react";
 
 const Product = () => {
-  // const [openReview, setOpenReview] = useState(false);
+  const navigate = useNavigate();
   const { slug } = useParams();
   const { data: product, isLoading } = useGetProductBySlugQuery(slug!, { skip: !slug });
   console.log("product", product)
@@ -34,7 +36,7 @@ const Product = () => {
 
   // useEffect(() => {
   //   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  // }, [])
+  // }, [slug])
 
   return (
     <div aria-label="pg-product" className="container mx-auto">
@@ -79,6 +81,7 @@ const Product = () => {
                 100 sold last 24 hours
               </span>
             </div>
+            {/* ./Sold badge */}
           </div>
           {/* ./ Upper Data */}
 
@@ -106,6 +109,7 @@ const Product = () => {
               )))}
             </div>
           </div>
+          {/* ./Colors Variant */}
 
           <div
             aria-label="product-views"
@@ -148,12 +152,14 @@ const Product = () => {
                 </span>
               </label>
             </div>
+            {/* ./Term-Condition */}
 
             <div aria-label="btn-buy" className="w-full mt-2 mb-1">
               <Button className="text-xl w-full bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300">
                 Buy Now <MdPayment className="inline-block ml-2" />
               </Button>
             </div>
+            {/* ./Buy Button */}
 
             <div
               aria-label="product-btns-options"
@@ -163,6 +169,7 @@ const Product = () => {
                 <div
                   aria-label="wishlist-option"
                   className="group flex items-center cursor-pointer"
+                  onClick={() => addToWishlist(product?._id).then(() => navigate("/wishlist"))}
                 >
                   <HiOutlineHeart className="text-xs text-black group-hover:text-red-600 transition-colors duration-300 cursor-pointer" />
                   <span className="text-sm text-gray-500 ml-1 group-hover:text-red-600">
@@ -191,6 +198,7 @@ const Product = () => {
                 </span>
               </div>
             </div>
+            {/* ./Button Options */}
 
             <hr className="w-full h-0.5 bg-gray-200 my-3" />
 
@@ -299,20 +307,12 @@ const Product = () => {
             </div>
           </div>
 
-          <CustomerReviews reviews={reviews} />
+          <CustomerReviews productId={product?._id!} reviews={reviews} />
         </Tabs>
       </Box>
 
       <Box className="w-full mt-6">
-        <SectionHeader title="Related Products" />
-
-        <Carousel>
-          {trendingProducts.map((product, index) => (
-            <div className="flex-shrink-0 basis-full sm:basis-1/3 md:basis-1/4 lg:basis-1/6">
-              <VerticalProduct product={product} key={index} />
-            </div>
-          ))}
-        </Carousel>
+        <RelatedProducts tags={product?.tags || []} category={product?.category[0]._id!} />
       </Box>
     </div>
   );

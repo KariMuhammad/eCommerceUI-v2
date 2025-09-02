@@ -148,10 +148,11 @@ export const mapProductFromApi = (apiResponse: ProductResponse): Product => ({
   price: apiResponse.price,
   rate: apiResponse.averageRatings,
 
-  category: apiResponse.category[0].name,
+  category: { _id: apiResponse.category[0]._id, name: apiResponse.category[0].name },
   slug: apiResponse.slug,
 
   discount: apiResponse.discount.percentage,
+  discountedPrice: apiResponse.discountedPrice,
   savingsAmount: apiResponse.savingsAmount,
   discountEndTime: apiResponse.discount.endDate,
 
@@ -182,3 +183,20 @@ export const priceFormatter = ({ price = 0, currency = 'USD', locale = 'en-US', 
 
   return formatPrice(price);
 };
+
+
+// Utility class for price formatting
+export class PriceFormatter {
+  private static formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  static format(price: number): string {
+    return this.formatter.format(price);
+  }
+
+  static calculateDiscountedPrice(price: number, discountPercentage: number): number {
+    return price - (price * (discountPercentage / 100));
+  }
+}

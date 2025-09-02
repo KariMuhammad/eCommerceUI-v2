@@ -16,3 +16,12 @@
   - [x] Register
   - [ ] Wishlist
   - [ ] Cart
+
+
+<!-- Current TODOS -->
+- After create review, return new stats
+or invalidate all review stats of current product
+
+- delete from wishlist
+
+- at the end, add to cart

@@ -43,7 +43,7 @@ const HorizontalProduct = ({
           />
         )}
 
-        {showInUI.options && <ProductOptions />}
+        {showInUI.options && <ProductOptions product={product} />}
       </div>
 
       <div aria-label="product-content" className="flex flex-col w-full gap-y-2 px-3">

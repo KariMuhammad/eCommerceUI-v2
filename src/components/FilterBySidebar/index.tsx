@@ -1,4 +1,5 @@
-import { products } from "@/constants";
+// import { products } from "@/constants";
+
 import { Color, HorizontalProduct } from "../shared";
 import Badge from "../shared/Badge";
 import Checkbox from "../shared/Checkbox";
@@ -72,28 +73,32 @@ export default function FilterBySidebar() {
       </Box>
 
       <Box className="my-3">
-        <FilterBy by="Featured Products">
+        <></>
+        {/* <FilterBy by="Featured Products">
           <HorizontalProduct
             product={products[0]}
             showInUI={showInUI("image1", "image2", "price", "name")}
             imgSize="w-48 h-48"
           />
+
           <HorizontalProduct
             product={products[2]}
             showInUI={showInUI("image1", "image2", "price", "name")}
             imgSize="w-48 h-48"
           />
+
           <HorizontalProduct
             product={products[3]}
             showInUI={showInUI("image1", "image2", "price", "name")}
             imgSize="w-48 h-48"
           />
+
           <HorizontalProduct
             product={products[0]}
             showInUI={showInUI("image1", "image2", "price", "name")}
             imgSize="w-48 h-48"
           />
-        </FilterBy>
+        </FilterBy> */}
       </Box>
 
       <div>

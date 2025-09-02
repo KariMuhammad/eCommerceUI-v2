@@ -118,11 +118,7 @@ const ProductDetails = () => {
           >
             <div
               className="bg-danger h-100"
-              role="progressbar"
               style={{ width: "70%" }}
-              aria-valuenow="70"
-              aria-valuemin="0"
-              aria-valuemax="100"
             ></div>
           </div>
         </div>

@@ -1,11 +1,30 @@
 import {
   BsArrowDownUp,
   BsCart,
-  BsEye,
   BsFillSuitHeartFill,
 } from "react-icons/bs";
+import ProductViewEye from "../ProductViewEye";
+import useModal from "@/hooks/use-modal";
+import ProductViewModal from "../ProductViewModal";
+import { ModalSizes, Product } from "@/types";
 
-export default function ProductOptions() {
+interface ProductOptionsProps {
+  product: Product;
+}
+
+export default function ProductOptions({ product }: ProductOptionsProps) {
+  const { openModal, closeModal } = useModal();
+
+  const handleViewModal = () => {
+    console.log("Product view", product);
+
+    openModal({
+      title: "",
+      children: <ProductViewModal product={product} onAddToWishlist={(id) => { }} onAddToCart={(id) => { }} onClose={closeModal} />,
+      size: ModalSizes.xl,
+    })
+  }
+
   return (
     <div
       aria-label="product-options"
@@ -19,6 +38,7 @@ export default function ProductOptions() {
           <BsCart />
         </a>
       </div>
+
       <div
         aria-label="product-compare"
         className="rounded-full transition-all p-2 hover:bg-black hover:text-white"
@@ -27,6 +47,7 @@ export default function ProductOptions() {
           <BsArrowDownUp />
         </a>
       </div>
+
       <div
         aria-label="product-wishlist"
         className="rounded-full transition-all p-2 hover:bg-black hover:text-white"
@@ -35,14 +56,8 @@ export default function ProductOptions() {
           <BsFillSuitHeartFill />
         </a>
       </div>
-      <div
-        aria-label="product-preview"
-        className="rounded-full transition-all p-2 hover:bg-black hover:text-white"
-      >
-        <a href="/product/1">
-          <BsEye />
-        </a>
-      </div>
+
+      <ProductViewEye onView={handleViewModal} />
     </div>
   );
 }

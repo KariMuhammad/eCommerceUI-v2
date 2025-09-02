@@ -1,6 +1,6 @@
 import { BsEnvelope, BsHouse, BsInfo, BsTelephone } from "react-icons/bs";
 
-import Breadcrump from "@/components/Breadcrump";
+import Breadcrump from "@/components/shared/Breadcrump";
 const Contact = () => {
   return (
     <div className="contact">

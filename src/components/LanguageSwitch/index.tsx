@@ -21,7 +21,7 @@ export default function LanguageSwitch() {
   };
 
   return (
-    <div aria-label="labguages-options " className="relative z-[99999]">
+    <div aria-label="languages-options " className="relative">
       <button
         className="border-none outline-none flex items-center gap-1 p-2 rounded-md" //bg-black text-white
         onClick={() => setListLanguages((p) => !p)}

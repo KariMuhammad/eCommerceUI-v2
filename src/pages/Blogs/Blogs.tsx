@@ -2,7 +2,7 @@
 import { blogs } from "@/constants";
 
 // Components
-import Breadcrump from "@/components/Breadcrump";
+import Breadcrump from "@/components/shared/Breadcrump";
 import { Blog } from "@/components";
 
 export default function Blogs(props) {

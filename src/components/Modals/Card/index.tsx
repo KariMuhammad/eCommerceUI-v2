@@ -47,7 +47,7 @@ export default function ModalCard() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           onClick={handleClosingCard}
         >
-          <div className={`bg-white p-6 rounded shadow-lg ${sizeClasses[size]}`}>
+          <div className={`bg-white p-6 rounded shadow-lg ${sizeClasses[size]} max-h-screen overflow-y-scroll`}>
             <h4 className="mb-4 border-b-2 border-b-gray-200">{title}</h4>
             {children}
           </div>

@@ -14,9 +14,10 @@ export type Color = {
 }
 
 export type Product = {
-  id?: number | string;
+  id?: string;
   slug: string;
-  category: string;
+  // category: string;
+  category: { _id: string, name: string };
   image2?: string;
   image1: string;
   details?: {
@@ -26,6 +27,7 @@ export type Product = {
   name: string;
   price: number;
   discount: number;
+  discountedPrice: number;
   savingsAmount: number;
   discountEndTime?: Date;
   quantity: number;
@@ -66,9 +68,15 @@ export type ProductResponse = {
   averageRatings: number;
   reviewsCount: number;
 
-  category: { name: string }[];
+  category: { _id: string, name: string }[];
   tags: string[];
   brand: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface WishlistProduct extends Product {
+  addedAt: Date;
 }
 
 export type Pagination = {

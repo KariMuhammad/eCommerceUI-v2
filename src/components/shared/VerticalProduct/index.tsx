@@ -37,7 +37,7 @@ export default function VerticalProduct({ product }: VerticalProductProps) {
           />
         )}
 
-        <ProductOptions />
+        <ProductOptions product={product} />
       </div>
 
       <div className="block">

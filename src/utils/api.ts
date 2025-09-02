@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401) {
             // Token is invalid or expired
             store.dispatch(logout());
-            window.location.href = '/auth/login';
+            window.location.href = '/login';
         }
         return Promise.reject(error);
     }

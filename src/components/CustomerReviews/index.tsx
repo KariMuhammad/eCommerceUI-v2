@@ -9,11 +9,15 @@ import Loading from '../shared/Loading';
 
 interface CustomerReviewsProps {
     reviews?: ReviewsResponse;
+    productId: string;
 }
 
 const CustomerReviews: React.FC<CustomerReviewsProps> = ({
+    productId,
     reviews: data = undefined
 }) => {
+    console.log("reviews", data);
+
     const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
 
     const handleWriteReviewClick = () => {
@@ -45,7 +49,7 @@ const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                 <Button className="w-fit rounded-md" onClick={handleWriteReviewClick}>Write a review</Button>
             </div>
 
-            <ReviewForm productId={reviews[0]?.product._id} isVisible={showReviewForm} onClose={handleCloseReviewForm} />
+            <ReviewForm productId={productId} isVisible={showReviewForm} onClose={handleCloseReviewForm} />
 
             <hr className="bg-gray-200 h-1 mb-4" />
 
@@ -54,15 +58,16 @@ const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                 <div className="space-y-7">
                     {reviews && reviews.map((review) => (
                         <div key={review._id} className="border-b border-gray-100 pb-8 last:border-b-0">
+                            {/* Review Title */}
+                            <h3 className="text-2xl font-times font-semibold text-gray-800 mb-2 flex items-center gap-1">
+                                {review.title}
+                                {(review.status === 'pending') && <span className='text-xs px-2 py-1 inline-flex items-center rounded-md bg-red-400/10 font-medium text-red-400 inset-ring inset-ring-red-400/20'>pending</span>}
+                            </h3>
+
                             {/* Review Header */}
                             <div className="flex items-center gap-2 mb-3">
                                 <Rates stars={5} rate={review.stars} isFixed />
                             </div>
-
-                            {/* Review Title */}
-                            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-                                {review.title}
-                            </h3>
 
                             {/* Author and Date */}
                             <div className="flex items-center gap-2 mt-3">
